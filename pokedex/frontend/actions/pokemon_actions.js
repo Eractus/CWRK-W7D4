@@ -1,0 +1,39 @@
+import APIUtil from '../util/api_util';
+
+export const RECEIVE_ALL_POKEMON = 'RECEIVE_ALL_POKEMON';
+export const RECEIVE_POKEMON = 'RECEIVE_POKEMON';
+
+export const receiveAllPokemon = (pokemon) => ({
+  type: RECEIVE_ALL_POKEMON,
+  pokemon: pokemon
+});
+
+export const receivePokemon = (pokemon) => ({
+  type: RECEIVE_POKEMON,
+  singlepokemon: pokemon
+});
+//
+// export const requestAllPokemon = () => (dispatch) => (
+//   APIUtil.fetchAllPokemon()
+//     .then(pokemon => dispatch(receiveAllPokemon(pokemon)))
+// );
+
+export const requestAllPokemon = () => {
+  // return anon function
+  return (dispatch) => {
+    //return function that takes in dispatch
+    return APIUtil.fetchAllPokemon() //returns a promise - ajax
+      .then(pokemon => dispatch(receiveAllPokemon(pokemon))
+    );
+  };
+};
+
+export const requestPokemon = (id) => {
+  // return anon function
+  return (dispatch) => {
+    //return function that takes in dispatch
+    return APIUtil.fetchPokemon(id) //returns a promise - ajax
+      .then(pokemon => dispatch(receivePokemon(pokemon))
+    );
+  };
+};
